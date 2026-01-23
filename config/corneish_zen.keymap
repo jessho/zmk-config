@@ -1,0 +1,142 @@
+/*
+*
+* Copyright (c) 2021 Darryl deHaan
+* SPDX-License-Identifier: MIT
+*
+*/
+
+#define LHYP LS(LC(LA(LCMD)))
+#define RHYP RS(RC(RA(RCMD)))
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    chosen {
+        // zmk,matrix-transform = &default_transform;
+
+        zmk,matrix-transform = &five_column_transform;
+    };
+};
+
+/ {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <150>;
+            quick-tap-ms = <0>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+};
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "ALPHA";
+
+            // -----------------------------------------------------------------------------------------------
+            // |  B  |  F  |  L  |  D  |  K  |                                 |  P  |  W  |  O  |  U  |  .  |
+            // |  N  |  S  |  H  |  T  |  M  |                                 |  Y  |  C  |  A  |  E  |  I  |
+            // |  X  |  V  |  J  |  Q  |  Z  |                                 |  '  |  G  |  /  |  ;  |  ,  |
+            //             | ESC |  R  | DEL |                                 | ENT | SPC | TAB |
+
+            bindings = <
+  &kp B        &kp F        &kp L       &kp D       &kp K                     &kp P       &kp W        &kp O       &kp U        &kp DOT
+  &hm LSHFT N  &hm LCTRL S  &hm LALT H  &hm LGUI T  &hm LHYP M                &hm RHYP Y  &hm RGUI C   &hm RALT A  &hm RCTRL E  &hm RSHFT I
+  &kp X        &kp V        &kp J       &kp Q       &kp Z                     &kp SQT     &kp G        &kp SLASH   &kp SEMI     &kp COMMA
+                            &kp ESC     &lt 1 R     &lt 2 BSPC                &lt 4 RET   &lt 3 SPACE  &lt 5 TAB
+            >;
+        };
+
+        sym_layer {
+            display-name = "SYMBOL";
+
+            // --------------------------------------------------------------------------------------
+            // |  ~  |  _  |  :  |  +  | '|' |                        |  <  |  &  |  *  |  (  |  )  |
+            // |  `  |     |  ;  |  =  |  \  |                        |  {  |  $  |  %  |  ^  |  }  |
+            // |     |     |     |  -  |     |                        |  [  |  !  |  @  |  #  |  ]  |
+            //             |     |     |     |                        |  (  |  )  |     |
+
+            bindings = <
+  &kp TILDE        &kp UNDER  &kp COLON      &kp PLUS        &kp PIPE                     &kp LT         &kp AMPS       &kp ASTRK       &kp LPAR         &kp RPAR
+  &hm LSHFT GRAVE  &kp LCTRL  &hm LALT SEMI  &hm LGUI EQUAL  &hm LHYP BSLH                &hm RHYP LBRC  &hm RGUI DLLR  &hm RALT PRCNT  &hm RCTRL CARET  &hm RSHFT RBRC
+  &none            &none      &none          &kp MINUS       &none                        &kp LBKT       &kp EXCL       &kp AT          &kp HASH         &kp RBKT
+                              &none          &none           &none                        &none          &kp LPAR       &kp RPAR
+            >;
+        };
+
+        num_layer {
+            display-name = "NUMBER";
+
+            // ------------------------------------------------------------------------------
+            // |     |     |     |     |     |                |  /  |  7  |  8  |  9  |  -  |
+            // | SHF | CTL | OPT | CMD | HYP |                |  *  |  4  |  5  |  6  |  +  |
+            // |     |     |     |     |     |                |  ,  |  1  |  2  |  3  |  =  |
+            //             |     |     |     |                |  .  |  0  |     |
+
+            bindings = <
+  &none      &none      &none     &none     &none                   &kp FSLH   &kp N7   &kp N8  &kp N9  &kp MINUS
+  &kp LSHFT  &kp LCTRL  &kp LALT  &kp LGUI  &kp LHYP               &kp ASTRK  &kp N4   &kp N5  &kp N6  &kp PLUS
+  &none      &none      &none     &none     &none                   &kp COMMA  &kp N1   &kp N2  &kp N3  &kp EQUAL
+                        &none     &none     &none                   &none      &kp DOT  &kp N0
+            >;
+        };
+
+        nav_layer {
+            display-name = "NAV";
+
+            // -------------------------------------------------------------------------------------
+            // |      | HOME |  ↑   | END  | PGUP |               | REDO |     | PGBK | PGFD |     |
+            // |      |   ←  |  ↓   |  →   | PGDN |               | HYP  | CMD | OPT  | CTL  | SHF |
+            // | UNDO | CUT  | COPY | PSTE |      |               |      |     |      |      |     |
+            //               |      |      |      |               |      |     |      |
+
+            bindings = <
+  &none      &kp HOME   &kp UP     &kp END    &kp PG_UP             &kp LG(Y)  &none     &kp LG(LBKT)  &kp LG(RBKT)  &none
+  &none      &kp LEFT   &kp DOWN   &kp RIGHT  &kp PG_DN             &kp RHYP   &kp RGUI  &kp RALT      &kp RCTRL     &kp RSHFT
+  &kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &none                 &none      &none     &none         &none         &none
+                        &none      &none      &none                 &none      &none     &none
+            >;
+        };
+
+        fn_layer {
+            display-name = "FN";
+
+            // ----------------------------------------------------------------------------------
+            // |    |  F7  |  F8  |  F9  |  F12  |              |       |     |     |     |     |
+            // |    |  F4  |  F5  |  F6  |  F11  |              | GLOBE | CMD | OPT | CTL | SHF |
+            // |    |  F1  |  F2  |  F3  |  F10  |              |       |     |     |     |     |
+            //             |      |      |       |              |       |     |     |
+
+            bindings = <
+  &none  &kp F7  &kp F8  &kp F9  &kp F12                &none    &none     &none     &none      &none
+  &none  &kp F4  &kp F5  &kp F6  &kp F11                &kp F24  &kp RGUI  &kp RALT  &kp RCTRL  &kp RSHFT
+  &none  &kp F1  &kp F2  &kp F3  &kp F10                &none    &none     &none     &none      &none
+                 &none   &none   &kp DEL                &none    &none     &none
+            >;
+        };
+
+        sys_layer {
+            display-name = "SYSTEM";
+
+            // ----------------------------------------------------------------------------
+            // | BT 0 | BT 1 | BT 2 | BT 3 |  BT 4  |           |     |    |    |    |    |                
+            // |      |      |      |      | BT CLR |           |     |    |    |    |    |
+            // |      |      |      |      | BOOTL  |           |     |    |    |    |    |
+            //               |      |      |        |           |     |    |    |
+
+            bindings = <
+  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4          &none  &none  &none  &none  &none
+  &none         &none         &none         &none         &bt BT_CLR            &none  &none  &none  &none  &none
+  &none         &none         &none         &none         &bootloader           &none  &none  &none  &none  &none
+                              &none         &none         &none                 &none  &none  &none
+            >;
+        };
+    };
+};
