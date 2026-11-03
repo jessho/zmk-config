@@ -49,7 +49,7 @@
 
             bindings = <
   &kp B        &kp L        &kp D       &kp C       &kp V         &kp J       &kp F        &kp O       &kp U        &kp COMMA
-  &hm LSHFT N  &hm LCTRL R  &hm LALT T  &hm S T     &hm LHYP G    &hm RHYP Y  &hm RGUI H   &hm RALT A  &hm RCTRL E  &hm RSHFT I
+  &hm LSHFT N  &hm LCTRL R  &hm LALT T  &hm LGUI S  &hm LHYP G    &hm RHYP Y  &hm RGUI H   &hm RALT A  &hm RCTRL E  &hm RSHFT I
   &kp X        &kp Q        &kp M       &kp W       &kp Z         &kp K       &kp P        &kp SQT     &kp SEMI     &kp PERIOD
                             &kp ESC     &lt 1 BSPC  &lt 2 DEL     &lt 4 RET   &lt 3 SPACE  &lt 5 TAB
             >;
